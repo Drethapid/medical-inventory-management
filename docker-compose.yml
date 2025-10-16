@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./inventory.db:/app/inventory.db
+    environment:
+      - DATABASE_URL=sqlite:///inventory.db
