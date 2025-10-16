@@ -22,9 +22,11 @@ class Item(db.Model):
                 "quantity": self.quantity, "location": self.location,
                 "last_updated": self.last_updated.isoformat() if self.last_updated else None}
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+def init_db():
+    with app.app_context():          # required for Flask-SQLAlchemy 3.x
+        db.create_all()              # idempotent; safe if called more than once
+
+init_db()
 
 @app.route("/")
 def index():
